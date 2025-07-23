@@ -39,4 +39,7 @@ export class LoginComponent {
       alert('Please fill all required fields');
     }
   }
+  goToRegister() {
+    this.router.navigate(['/register'])
+  }
 }

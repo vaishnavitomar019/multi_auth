@@ -1,0 +1,16 @@
+.login-page {
+  height: 100vh;
+  background: url('/assets/bg-login.jpeg') no-repeat center center;
+  background-size: cover;
+  font-family: 'Poppins', sans-serif;
+}
+
+.login-box {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  max-width: 380px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
