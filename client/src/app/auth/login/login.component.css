@@ -14,3 +14,6 @@
   width: 100%;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
+input.is-invalid {
+  border-color: #ff4d4d !important;
+}

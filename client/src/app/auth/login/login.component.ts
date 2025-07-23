@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  isSubmitting = false;
+  errorMessage = '';
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
@@ -20,26 +22,27 @@ export class LoginComponent {
       password: ['', Validators.required]
     });
   }
-  onSubmit() {
-    if (this.loginForm.valid) {
-      const formData = this.loginForm.value;
+  onSubmit(): void {
+    this.isSubmitting = true;
 
-      this.authService.login(formData).subscribe({
-        next: (res) => {
-          console.log('Login Success', res);
-          alert('Login Successful');
-          this.router.navigate(['/dashboard']);
-        },
-        error: (err) => {
-          console.error('Login Failed', err);
-          alert('Invalid credentials');
-        },
-      });
-    } else {
-      alert('Please fill all required fields');
+    if (this.loginForm.invalid) {
+      console.log('Form invalid');
+      return;
     }
+    this.errorMessage = '';
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (res) => {
+        localStorage.setItem('token', res.token);
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        this.errorMessage = 'Invalid email or password';
+        this.isSubmitting = false;
+      },
+    });
+
   }
-  goToRegister(){
+  goToRegister() {
     this.router.navigate(['/register'])
   }
 }
