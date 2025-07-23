@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormioModule } from '@formio/angular';
 import { AuthService } from '../../core/services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -71,7 +72,7 @@ export class RegisterComponent {
       // },
       {
         "type": "button",
-        "label": "Submit",
+        "label": "Register",
         "key": "submit",
         "disableOnInvalid": true,
         "input": true,
@@ -80,7 +81,7 @@ export class RegisterComponent {
     ]
   }
   
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService , private router:Router) { }
 
   onSubmit(submission: any) {
     const formData = submission.data;
@@ -89,6 +90,7 @@ export class RegisterComponent {
     this.authService.register(formData).subscribe({
       next: (res) => {
         console.log('Registration successful', res);
+        this.router.navigate(['/login'])
 
       },
       error: (err) => {

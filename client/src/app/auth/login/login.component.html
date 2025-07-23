@@ -1,31 +1,36 @@
 <div class="login-page d-flex align-items-center justify-content-center">
-    <div class="login-box p-4">
-        <h2 class="text-white text-center mb-4">Login</h2>
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            <div class="mb-3">
-                <label class="form-label text-white">Email</label>
-                <input type="email" class="form-control bg-transparent text-white border-light" formControlName="email"
-                    required />
+    <div class="login-box p-4" role="form" aria-labelledby="login-heading">
+        <h2 id="login-heading" class="text-white text-center mb-4">Login</h2>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" aria-describedby="login-instructions">
+            <div id="login-instructions" class="visually-hidden">
+                Please enter your email and password to log in.
             </div>
 
             <div class="mb-3">
-                <label class="form-label text-white">Password</label>
-                <input type="password" class="form-control bg-transparent text-white border-light"
-                    formControlName="password" required />
+                <label for="email" class="form-label text-white">Email</label>
+                <input type="email" id="email" formControlName="email"
+                    class="form-control bg-transparent text-white border-light" required aria-required="true"
+                    aria-label="Email address" autocomplete="username" />
             </div>
 
-            <!-- <div class="d-flex justify-content-between mb-3 text-white small">
-                <div>
-                    <input type="checkbox" class="form-check-input me-1" />
-                    <label class="form-check-label">Remember Me</label>
-                </div>
-                <a href="#" class="text-white text-decoration-none">Forget Password</a>
-            </div> -->
+            <div class="mb-3">
+                <label for="password" class="form-label text-white">Password</label>
+                <input type="password" id="password" formControlName="password"
+                    class="form-control bg-transparent text-white border-light" required aria-required="true"
+                    aria-label="Password" autocomplete="current-password" />
+            </div>
 
-            <button type="submit" class="btn btn-light w-100 rounded-pill">Log In</button>
+            <button type="submit" class="btn btn-light w-100 rounded-pill" aria-label="Log in">
+                Log In
+            </button>
 
             <p class="text-white text-center mt-3 small">
-                Don’t have an account? <a (click)="goToRegister()" class="text-white fw-semibold text-decoration-underline">Register</a>
+                Don’t have an account?
+                <a (click)="goToRegister()" class="text-white fw-semibold text-decoration-underline" role="link"
+                    tabindex="0" aria-label="Go to register page">
+                    Register
+                </a>
             </p>
         </form>
     </div>
