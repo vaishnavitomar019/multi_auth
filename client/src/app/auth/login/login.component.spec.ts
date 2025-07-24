@@ -1,23 +1,72 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LoginComponent } from './login.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { Router } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
+import { of, throwError } from 'rxjs';
+
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
+  let routerSpy: jasmine.SpyObj<Router>;
+  let authServiceSpy: jasmine.SpyObj<AuthService>;
 
   beforeEach(async () => {
+    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['login']);
     await TestBed.configureTestingModule({
-      imports: [LoginComponent]
+      imports: [LoginComponent, HttpClientTestingModule],
+      providers: [
+        { provide: AuthService, useValue: authServiceSpy },
+        { provide: Router, useValue: routerSpy }
+      ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
+    component.loginForm = component['fb'].group({
+      email: ['test@example.com'],
+      password: ['password123']
+    });
+
     fixture.detectChanges();
+    routerSpy = TestBed.inject(Router) as jasmine.SpyObj<Router>;
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  it('should navigate to  register when  goToregister function called', () => {
+    component.goToRegister();
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/register'])
+  })
+
+  it('should not submit if form is invalid', () => {
+    component.loginForm.setErrors({ invalid: true });
+    component.onSubmit();
+    expect(authServiceSpy.login).not.toHaveBeenCalled();
+  });
+
+
+  it('should login and navigate to dashboard on success', () => {
+    const mockResponse = { token: 'mock-token' };
+    authServiceSpy.login.and.returnValue(of(mockResponse));
+
+    spyOn(localStorage, 'setItem');
+    component.onSubmit();
+    expect(authServiceSpy.login).toHaveBeenCalledWith(component.loginForm.value);
+    expect(localStorage.setItem).toHaveBeenCalledWith('token', 'mock-token');
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/dashboard']);
+  });
+  
+  it('should set errorMessage on login failure', () => {
+    authServiceSpy.login.and.returnValue(throwError(() => ({ error: 'Invalid credentials' })));
+
+    component.onSubmit();
+
+    expect(component.errorMessage).toBe('Invalid email or password');
+    expect(component.isSubmitting).toBeFalse();
   });
 });

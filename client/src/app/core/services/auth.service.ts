@@ -7,7 +7,7 @@ import { LoginResponse } from '../models/loginresponse';
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = environment.apiUrl;
+  public baseUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
   register(userData: any) {

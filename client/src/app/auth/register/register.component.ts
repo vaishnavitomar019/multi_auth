@@ -95,7 +95,6 @@ export class RegisterComponent {
       },
       error: (err) => {
         console.error('Registration failed', err);
-
       }
     });
   }
