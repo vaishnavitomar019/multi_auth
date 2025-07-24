@@ -2,6 +2,10 @@
     <div class="login-box p-4" role="form" aria-labelledby="login-heading">
         <h2 id="login-heading" class="text-white text-center mb-4">Login</h2>
 
+        <button class="btn btn-light w-100 rounded-pill mb-3" aria-label="Login with Google">
+            <img src="assets/google.png" alt="Google" width="20" height="20" /> Login with Google
+        </button>
+
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" aria-describedby="login-instructions">
             <div *ngIf="errorMessage" class="alert alert-danger mt-2">
                 {{ errorMessage }}
@@ -22,7 +26,6 @@
                     <div *ngIf="loginForm.controls['email']?.errors?.['email']">Email must be a valid email.</div>
                 </div>
             </div>
-
             <div class="mb-3">
                 <label for="password" class="form-label text-white">Password</label>
                 <input type="password" id="password" formControlName="password"
@@ -33,7 +36,6 @@
                     <div *ngIf="loginForm.controls['password']?.errors?.['required']">Password is required.</div>
                 </div>
             </div>
-
             <button class="btn btn-light w-100 rounded-pill" aria-label="Log in" type="submit">
                 {{ isSubmitting ? 'Logging in...' : 'Login' }}
             </button>
