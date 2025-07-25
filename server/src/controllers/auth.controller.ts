@@ -25,21 +25,34 @@ export const register = async (req: Request, res: Response) => {
     res.status(500).json({ error: err.message });
   }
 };
-
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   try {
     const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ message: "User not found" });
+
+    if (!user || !user.password) {
+      return res.status(404).json({ message: "User not found or password is missing" });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(401).json({ message: "Invalid credentials" });
 
-    const token = generateToken({ id: user._id, email: user.email,username:user.username });
+    const token = generateToken({
+      id: user._id,
+      email: user.email,
+      username: user.username,
+    });
 
-    res.status(200).json({ token, user: { id: user._id, username: user.username } });
+    res.status(200).json({
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+      },
+    });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
 };
+

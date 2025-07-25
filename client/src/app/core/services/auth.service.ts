@@ -17,4 +17,9 @@ export class AuthService {
   login(credentials: any) {
     return this.http.post<LoginResponse>(`${this.baseUrl}/login`, credentials);
   }
+
+  loginWithGoogle(): void {
+    window.location.href = `${this.baseUrl}/google`;
+  }
+
 }
