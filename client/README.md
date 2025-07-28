@@ -64,3 +64,90 @@ src/
     ├── app.component.ts         # Root standalone component
     ├── app.routes.ts            # Root routing config
     └── main.ts                  # Bootstrap logic
+
+
+Authentication Options
+Traditional Login/Register (username, email, password)
+OAuth with Google
+
+___________________________________________________________________
+ Full Flow Explanation
+🔹 1. Registration (Traditional)
+User Input:
+
+Username
+
+Email
+
+Password
+
+Backend Flow:
+
+Validate input.
+
+Hash password.
+
+Save to database.
+
+Return success or error.
+
+🔹 2. Login (Traditional)
+User Input:
+
+Email or Username
+
+Password
+
+Backend Flow:
+
+Find user by email/username.
+
+Compare hashed password.
+
+If valid, generate token (JWT or session).
+
+Return login success + token.
+
+🔹 3. Google OAuth (Register/Login Combined)
+Frontend:
+
+User clicks "Login with Google" button.
+
+Redirect to Google Consent Screen.
+
+On success, Google sends back a token + user profile.
+
+Backend Flow:
+
+Verify token with Google API.
+
+Extract Google Email & Name.
+
+Check if user exists:
+
+✅ If exists: log them in.
+
+❌ If not: register them.
+
+Generate app token (JWT/session).
+
+Return success + token.
+
+🔑 Token Use (Both Options)
+After login (either method), you return a JWT token or create a session.
+
+Use token to protect private routes.
+
+🔄 Frontend Integration Flow
+Show 2 buttons:
+
+"Register / Login with Email"
+
+"Login with Google"
+
+Based on choice:
+
+Show traditional form.
+
+OR trigger Google OAuth popup.
+

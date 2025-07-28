@@ -35,7 +35,7 @@ export class LoginComponent {
     this.authService.login(this.loginForm.value).subscribe({
       next: (res) => {
         localStorage.setItem('token', res.token);
-        this.router.navigate(['/dashboard']);
+          this.router.navigate(['/login/success'], { queryParams: { token: res.token } });
       },
       error: (err) => {
         this.errorMessage = 'Invalid email or password';

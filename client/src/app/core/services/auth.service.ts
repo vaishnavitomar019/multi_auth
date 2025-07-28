@@ -22,4 +22,24 @@ export class AuthService {
     window.location.href = `${this.baseUrl}/google`;
   }
 
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
+  }
+
+
+  logout() {
+    localStorage.removeItem('token');
+  }
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  getProfile() {
+    const token = this.getToken();
+    return this.http.get(`${this.baseUrl}/profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+  }
 }

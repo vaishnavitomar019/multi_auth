@@ -29,7 +29,9 @@ router.get('/google/callback',
     });
 
     // You can redirect with token or respond with it
-    res.redirect(`http://localhost:4200/dashboard?token=${token}`);
+    // res.redirect(`http://localhost:4200/dashboard?token=${token}`);
+    res.redirect(`http://localhost:4200/login/success?token=${token}`);
+
     // or: res.json({ token });
   }
 );
