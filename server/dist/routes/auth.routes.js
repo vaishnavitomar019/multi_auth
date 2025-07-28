@@ -23,7 +23,7 @@ router.get('/google/callback', passport_1.default.authenticate('google', {
     // Generate JWT for user
     const user = req.user;
     const jwt = require('jsonwebtoken');
-    const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id, email: user.email, username: user.username }, process.env.JWT_SECRET, {
         expiresIn: '1d'
     });
     // You can redirect with token or respond with it

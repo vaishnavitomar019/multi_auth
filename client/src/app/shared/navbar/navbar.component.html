@@ -1,1 +1,19 @@
-<p>navbar works!</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 sticky-top">
+  <a class="navbar-brand" href="#">Multi-Auth</a>
+
+  <div class="ms-auto dropdown" *ngIf="user">
+    <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" href="#" id="userDropdown"
+      role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <img src="https://i.imgur.com/1X6vA8N.png" alt="user" width="40" height="40" class="rounded-circle me-2">
+      <span>{{ user.username}}</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
+      <li class="px-3 py-2">
+        <strong>{{ user.username}}</strong><br>
+        <small class="text-muted">{{ user.email }}</small>
+      </li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item text-danger" (click)="logout()">Logout</a></li>
+    </ul>
+  </div>
+</nav>

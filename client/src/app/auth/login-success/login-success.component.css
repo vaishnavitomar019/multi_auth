@@ -1,4 +1,77 @@
-.spinner-border {
-  width: 3rem;
-  height: 3rem;
+.success-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  font-family: "Poppins", sans-serif;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  padding: 40px 60px;
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  animation: bounceIn 0.8s ease-in-out;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.checkmark-circle {
+  width: 100px;
+  height: 100px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  position: relative;
+  box-shadow: 0 0 25px rgba(0, 191, 255, 0.8);
+}
+
+.checkmark {
+  width: 30px;
+  height: 15px;
+  border-left: 5px solid #00bfff;
+  border-bottom: 5px solid #00bfff;
+  position: absolute;
+  top: 35px;
+  left: 33px;
+  transform: rotate(-45deg);
+  animation: drawCheck 0.6s 0.4s ease forwards;
+  opacity: 0;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #eeeeee;
+  margin-top: 8px;
+}
+
+@keyframes drawCheck {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  80% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
