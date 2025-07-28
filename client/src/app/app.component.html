@@ -1,5 +1,5 @@
 <!-- app.component.html -->
-<div class="d-flex flex-column min-vh-100">
+<div *ngIf="authService.isLoggedIn(); else showLogin" class="d-flex flex-column min-vh-100">
   <!-- Navbar -->
   <app-navbar></app-navbar>
 
@@ -13,3 +13,8 @@
     </div>
   </div>
 </div>
+
+<!-- Login View -->
+<ng-template #showLogin>
+  <router-outlet></router-outlet>
+</ng-template>
