@@ -1,1 +1,15 @@
-<router-outlet></router-outlet>
+<!-- app.component.html -->
+<div class="d-flex flex-column min-vh-100">
+  <!-- Navbar -->
+  <app-navbar></app-navbar>
+
+  <div class="d-flex flex-grow-1">
+    <!-- Sidebar -->
+    <app-sidebar></app-sidebar>
+
+    <!-- Main Content Area -->
+    <div class="content p-4 w-100">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
