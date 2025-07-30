@@ -4,8 +4,6 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 
-
-
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -24,6 +22,16 @@ export class LoginComponent {
       password: ['', Validators.required]
     });
   }
+
+
+  ngOnInit()
+  {
+    const token=this.authService.getToken();
+    if(token){
+        this.router.navigate(['/dashboard']);
+    }
+  }
+
   onSubmit(): void {
     this.isSubmitting = true;
 

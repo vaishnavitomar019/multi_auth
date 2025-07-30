@@ -20,4 +20,8 @@ describe('LoginSuccessComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should  navigate to login  if token is missing',()=>{
+    
+  })
 });

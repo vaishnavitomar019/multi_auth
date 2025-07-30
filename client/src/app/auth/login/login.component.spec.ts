@@ -49,7 +49,6 @@ describe('LoginComponent', () => {
     expect(authServiceSpy.login).not.toHaveBeenCalled();
   });
 
-
   it('should login and navigate to dashboard on success', () => {
     const mockResponse = { token: 'mock-token' };
     authServiceSpy.login.and.returnValue(of(mockResponse));
@@ -60,12 +59,10 @@ describe('LoginComponent', () => {
     expect(localStorage.setItem).toHaveBeenCalledWith('token', 'mock-token');
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/dashboard']);
   });
-  
+
   it('should set errorMessage on login failure', () => {
     authServiceSpy.login.and.returnValue(throwError(() => ({ error: 'Invalid credentials' })));
-
     component.onSubmit();
-
     expect(component.errorMessage).toBe('Invalid email or password');
     expect(component.isSubmitting).toBeFalse();
   });
