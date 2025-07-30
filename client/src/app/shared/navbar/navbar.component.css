@@ -3,3 +3,8 @@
     min-width: 220px;
     font-size: 14px;
   }
+.navbar{
+    /* background: linear-gradient(to bottom, #1e3c72, #2a5298); 
+    background: linear-gradient(to bottom, #41295a, #2F0743); */
+    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+}

@@ -1,0 +1,32 @@
+<div class="container py-5">
+  <div class="card shadow-lg p-4">
+    <h2 class="mb-4 text-center text-primary">Smart AI Summarizer</h2>
+
+    <!-- Upload Section -->
+    <div class="mb-3">
+      <label class="form-label">Upload PDF or Text File</label>
+      <input type="file" (change)="onFileSelected($event)" class="form-control" accept=".pdf,.txt" />
+    </div>
+
+    <!-- Or Type Text -->
+    <div class="mb-3">
+      <label class="form-label">Or Enter Text</label>
+      <textarea [(ngModel)]="inputText" rows="6" class="form-control" placeholder="Paste or type your content here..."></textarea>
+    </div>
+
+    <!-- Summarize Button -->
+    <div class="text-center">
+      <button (click)="summarizeText()" class="btn btn-primary px-4" [disabled]="loading">
+        {{ loading ? 'Summarizing...' : 'Summarize' }}
+      </button>
+    </div>
+
+    <!-- Summary Output -->
+    <div *ngIf="summaryText" class="mt-4">
+      <h5>🔍 Summary:</h5>
+      <div class="summary-box p-3 bg-light border rounded">
+        {{ summaryText }}
+      </div>
+    </div>
+  </div>
+</div>

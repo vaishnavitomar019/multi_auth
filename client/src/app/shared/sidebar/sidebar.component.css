@@ -6,9 +6,8 @@
 }
 
 .sidebar.collapsed {
-  width: 60px;
+  width: 90px;
 }
-
 .sidebar .nav-link {
   white-space: nowrap;
   overflow: hidden;
@@ -22,4 +21,27 @@
 
 .content {
   transition: margin-left 0.3s ease;
+}
+
+.sidebar {
+
+  /* position: fixed; */
+  font-size: 20px;
+  background: linear-gradient(135deg, #0d1742, #099bc7);
+  /* background: linear-gradient(90deg,rgba(2, 0, 36, 1) 10%, rgba(9, 9, 121, 1) 55%); */
+
+}
+.nav-link {
+  padding: 10px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.nav-link.active {
+  background-color: rgba(255, 255, 255, 0.25);
+  font-weight: 500;
 }

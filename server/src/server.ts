@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import session from 'express-session';
 import authRoutes from './routes/auth.routes';
+import pdfRoutes from './routes/pdf.routes';
 import { connectDB } from './config/db.config';
 import './config/passport'; // This loads and configures passport
 
@@ -34,6 +35,7 @@ app.get('/', (req, res) => {
   res.send('API is running...');
 });
 app.use('/api', authRoutes);
+app.use('/api',pdfRoutes);
 
 // Connect to DB
 connectDB();

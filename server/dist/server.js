@@ -10,6 +10,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const path_1 = __importDefault(require("path"));
 const express_session_1 = __importDefault(require("express-session"));
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
+const pdf_routes_1 = __importDefault(require("./routes/pdf.routes"));
 const db_config_1 = require("./config/db.config");
 require("./config/passport"); // This loads and configures passport
 dotenv_1.default.config({ path: path_1.default.resolve(__dirname, '../.env') });
@@ -31,6 +32,7 @@ app.get('/', (req, res) => {
     res.send('API is running...');
 });
 app.use('/api', auth_routes_1.default);
+app.use('/api', pdf_routes_1.default);
 // Connect to DB
 (0, db_config_1.connectDB)();
 // Error handling
