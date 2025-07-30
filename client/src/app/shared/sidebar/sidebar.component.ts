@@ -19,8 +19,5 @@ export class SidebarComponent {
     this.isCollapsed = !this.isCollapsed;
   }
 
-  logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/login']);
-  }
+
 }

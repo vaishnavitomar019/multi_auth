@@ -14,7 +14,7 @@ describe('LoginComponent', () => {
 
   beforeEach(async () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['login']);
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['login', 'getToken']);
     await TestBed.configureTestingModule({
       imports: [LoginComponent, HttpClientTestingModule],
       providers: [
@@ -38,6 +38,7 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
   it('should navigate to  register when  goToregister function called', () => {
     component.goToRegister();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/register'])
@@ -57,7 +58,10 @@ describe('LoginComponent', () => {
     component.onSubmit();
     expect(authServiceSpy.login).toHaveBeenCalledWith(component.loginForm.value);
     expect(localStorage.setItem).toHaveBeenCalledWith('token', 'mock-token');
-    expect(routerSpy.navigate).toHaveBeenCalledWith(['/dashboard']);
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/login/success'], {
+      queryParams: { token: 'mock-token' }
+    });
+
   });
 
   it('should set errorMessage on login failure', () => {
@@ -66,4 +70,14 @@ describe('LoginComponent', () => {
     expect(component.errorMessage).toBe('Invalid email or password');
     expect(component.isSubmitting).toBeFalse();
   });
+
+  it('should redirect to dashboard if token is already present', () => {
+    authServiceSpy.getToken.and.returnValue('mock-token');
+
+    component.ngOnInit();
+
+    expect(authServiceSpy.getToken).toHaveBeenCalled();
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/dashboard']);
+  });
+
 });
