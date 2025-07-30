@@ -13,7 +13,8 @@ import { CommonModule } from '@angular/common';
 export class SidebarComponent {
   isCollapsed = false;
 
-  constructor(private authService:AuthService, private router: Router) {}
+  constructor(private authService:AuthService, private router: Router) {};
+  
 
   toggleSidebar(): void {
     this.isCollapsed = !this.isCollapsed;
