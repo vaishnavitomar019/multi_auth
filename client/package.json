@@ -10,7 +10,6 @@
   },
   "private": true,
   "dependencies": {
-   "@abacritt/angularx-social-login": "2.3.1",
     "@angular/animations": "^17.3.0",
     "@angular/common": "^17.3.0",
     "@angular/compiler": "^17.3.0",
@@ -19,7 +18,6 @@
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
-    "@formio/angular": "^9.0.1",
     "@formio/js": "^5.2.0",
     "bootstrap": "^5.3.7",
     "bootstrap-icons": "^1.13.1",
