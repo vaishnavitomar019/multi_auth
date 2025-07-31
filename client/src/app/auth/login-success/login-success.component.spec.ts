@@ -9,6 +9,7 @@ describe('LoginSuccessComponent', () => {
   let fixture: ComponentFixture<LoginSuccessComponent>;
   let routerSpy: jasmine.SpyObj<Router>;
 
+
   beforeEach(async () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
