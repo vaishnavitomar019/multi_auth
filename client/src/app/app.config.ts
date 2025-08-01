@@ -3,26 +3,25 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
-import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideHttpClient(),
-    importProvidersFrom(SocialLoginModule),
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '907687285228-gsfg9v0r23u4fi7ehps86p9aml5ie3bg.apps.googleusercontent.com '
-            ),
-          },
-        ],
-      } as SocialAuthServiceConfig,
-    },
+    // importProvidersFrom(SocialLoginModule),
+    // {
+    //   provide: 'SocialAuthServiceConfig',
+    //   useValue: {
+    //     autoLogin: false,
+    //     providers: [
+    //       {
+    //         id: GoogleLoginProvider.PROVIDER_ID,
+    //         provider: new GoogleLoginProvider(
+    //           '907687285228-gsfg9v0r23u4fi7ehps86p9aml5ie3bg.apps.googleusercontent.com '
+    //         ),
+    //       },
+    //     ],
+    //   } as SocialAuthServiceConfig,
+    // },
   ],
 };

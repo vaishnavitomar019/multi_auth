@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormioModule } from '@formio/angular';
+// import { FormioModule } from '@formio/angular';
 import { AuthService } from '../../core/services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, FormioModule,HttpClientModule],
+  imports: [CommonModule,HttpClientModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
