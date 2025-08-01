@@ -14,14 +14,44 @@
           <span *ngIf="!isCollapsed">Dashboard</span>
         </a>
       </li>
+
       <li class="nav-item">
-        <a class="nav-link text-white" routerLink="summarizer">
+        <a class="nav-link text-white" routerLink="/summarizer">
           <i class="bi bi-robot me-2 fs-4"></i>
           <span *ngIf="!isCollapsed">AI Summarizer</span>
         </a>
       </li>
+
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/translation">
+          <i class="bi bi-translate me-2 fs-4"></i>
+          <span *ngIf="!isCollapsed">Text Translation</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/correction">
+          <i class="bi bi-pencil-square me-2 fs-4"></i>
+          <span *ngIf="!isCollapsed">Grammar Correction</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/code-explanation">
+          <i class="bi bi-code-slash me-2 fs-4"></i>
+          <span *ngIf="!isCollapsed">Code Explanation</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/resume-matcher">
+          <i class="bi bi-file-earmark-person me-2 fs-4"></i>
+          <span *ngIf="!isCollapsed">Resume/JD Matcher</span>
+        </a>
+      </li>
+
       <li class="nav-item mt-auto">
-        <a class="nav-link text-white">
+        <a class="nav-link text-white" routerLink="/user">
           <i class="bi bi-person-circle me-2 fs-4"></i>
           <span *ngIf="!isCollapsed">User</span>
         </a>
