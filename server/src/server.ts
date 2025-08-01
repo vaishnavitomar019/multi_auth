@@ -7,7 +7,7 @@ import session from 'express-session';
 import authRoutes from './routes/auth.routes';
 import pdfRoutes from './routes/pdf.routes';
 import { connectDB } from './config/db.config';
-import './config/passport'; // This loads and configures passport
+import './config/passport'; 
 
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
