@@ -1,37 +1,24 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { register, login } from '../controllers/auth.controller';
 import { verifyToken } from '../middleware/auth.middleware';
+import authController from '../controllers/auth.controller';
 
-const router = Router();
+class AuthRoutes{
+public router=Router();
+  
+   constructor(){
+    this.router=Router();
+    this.initializeRoutes();
+   }
 
-// Email/Password Auth
-router.post('/register', register);
-router.post('/login', login);
-router.get('/profile', verifyToken, (req, res) => {
-  res.json({ message: "Welcome", user: (req as any).user });
-});
+   private initializeRoutes(){
+     this.router.post('/register', authController.register);
+     this.router.post('/login',authController.login);
+     this.router.get('/profile',verifyToken,authController.getProfile);
+     this.router.get('/google',passport.authenticate('google',{scope:['profile','email']}));
+     this.router.get('/google/callback',passport.authenticate('google',{failureRedirect:'/login',session:false}),authController.googleCallback);
+   }
+}
 
-// Google Auth
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+export default  new AuthRoutes().router;
 
-router.get('/google/callback',
-  passport.authenticate('google', {
-    failureRedirect: '/login',
-    session: false
-  }),
-  (req, res) => {
-    // Generate JWT for user
-    const user = (req as any).user;
-    const jwt = require('jsonwebtoken');
-    const token = jwt.sign({ id: user._id, email: user.email,username:user.username }, process.env.JWT_SECRET!, {
-      expiresIn: '1d'
-    });
-
-
-    res.redirect(`http://localhost:4200/login/success?token=${token}`);
- 
-  }
-);
-
-export default router;

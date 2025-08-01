@@ -12,7 +12,7 @@ const express_session_1 = __importDefault(require("express-session"));
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
 const pdf_routes_1 = __importDefault(require("./routes/pdf.routes"));
 const db_config_1 = require("./config/db.config");
-require("./config/passport"); // This loads and configures passport
+require("./config/passport");
 dotenv_1.default.config({ path: path_1.default.resolve(__dirname, '../.env') });
 const app = (0, express_1.default)();
 // Middleware
