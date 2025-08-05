@@ -23,7 +23,8 @@ router.post('/summarize-pdf', upload.single('file'), (req, res) => __awaiter(voi
         if (!req.file)
             return res.status(400).json({ error: 'No file uploaded' });
         const data = yield (0, pdf_parse_1.default)(req.file.buffer);
-        const trimmedText = data.text.slice(0, 8000); // Prevent token overflow
+        const maxSafeChars = 24000;
+        const trimmedText = data.text.slice(0, maxSafeChars);
         const summary = yield (0, openai_utils_1.getPdfSummary)(trimmedText);
         res.json({ summary });
     }

@@ -1,9 +1,19 @@
 import express from 'express';
 import multer from 'multer';
 import pdfParse from 'pdf-parse';
-import { getPdfSummary } from '../utils/openai.utils';
+import { PdfSummarizer } from '../utils/openai.utils';
+
+class PdfRoutes {
+  public router = express.Router();
+  constructor() { }
+
+  pdfRoutes() {
+    this.router.post('/summarized-pdf',)
+  }
+}
 
 const router = express.Router();
+const summarizer = new PdfSummarizer();
 const upload = multer({ storage: multer.memoryStorage() });
 
 router.post('/summarize-pdf', upload.single('file'), async (req, res) => {
@@ -11,9 +21,10 @@ router.post('/summarize-pdf', upload.single('file'), async (req, res) => {
     if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
 
     const data = await pdfParse(req.file.buffer);
-    const trimmedText = data.text.slice(0, 8000); // Prevent token overflow
+    const maxSafeChars = 24000;
+    const trimmedText = data.text.slice(0, maxSafeChars);
 
-    const summary = await getPdfSummary(trimmedText);
+    const summary = await summarizer.summarize(trimmedText);
 
     res.json({ summary });
   } catch (error: any) {

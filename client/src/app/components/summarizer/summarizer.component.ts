@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
+import { SummaryService } from '../../core/services/summary.service';
 
 @Component({
   selector: 'app-summarizer',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './summarizer.component.html',
   styleUrl: './summarizer.component.css'
 })
@@ -14,26 +15,45 @@ export class SummarizerComponent {
   summaryText: string = '';
   loading: boolean = false;
 
-  summarizeText() {
-    this.loading = true;
-    
-    setTimeout(() => {
-      this.summaryText = 'This is a sample summary of the input text.';
-      this.loading = false;
-    }, 2000);
-  }
+  constructor(private summaryService: SummaryService) { }
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file && file.type === 'application/pdf') {
-      // Handle PDF parsing later
-      alert('PDF uploading supported (parsing coming soon)');
+      this.loading = true;
+      this.summaryService.uploadFile(file).subscribe({
+        next: (res) => {
+          this.summaryText = res.summary;
+          this.loading = false;
+        },
+        error: (err) => {
+          console.error('Upload error', err);
+          this.loading = false;
+        }
+      });
     } else {
+   
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.inputText = e.target.result;
       };
       reader.readAsText(file);
     }
+  }
+
+  summarizeText() {
+    if (!this.inputText.trim()) return;
+
+    this.loading = true;
+    this.summaryService.summarizeText(this.inputText).subscribe({
+      next: (res) => {
+        this.summaryText = res.summary;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Summary error', err);
+        this.loading = false;
+      }
+    });
   }
 }

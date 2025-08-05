@@ -16,34 +16,22 @@ exports.getPdfSummary = getPdfSummary;
 const node_fetch_1 = __importDefault(require("node-fetch"));
 function getPdfSummary(pdfText) {
     return __awaiter(this, void 0, void 0, function* () {
-        var _a;
-        const openaiEndpoint = 'https://api.openai.com/v1/chat/completions';
-        const response = yield (0, node_fetch_1.default)(openaiEndpoint, {
+        const ollamaEndpoint = 'http://192.168.2.235:11434/api/generate';
+        const response = yield (0, node_fetch_1.default)(ollamaEndpoint, {
             method: 'POST',
             headers: {
-                Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                model: 'gpt-3.5-turbo',
-                messages: [
-                    {
-                        role: 'system',
-                        content: 'You are a helpful assistant that summarizes PDF documents.',
-                    },
-                    {
-                        role: 'user',
-                        content: `Summarize this PDF content:\n\n${pdfText}`,
-                    },
-                ],
-                max_tokens: 500,
-                temperature: 0.5,
+                model: 'mistral',
+                prompt: `Summarize the following PDF content:\n\n${pdfText}`,
+                stream: false,
             }),
         });
-        const data = (yield response.json());
-        if (!response.ok || !data.choices || !data.choices.length) {
-            throw new Error(((_a = data.error) === null || _a === void 0 ? void 0 : _a.message) || 'OpenAI API error');
+        const data = yield response.json();
+        if (!response.ok || !data.response) {
+            throw new Error('Failed to generate summary: ' + (data.error || 'Unknown error'));
         }
-        return data.choices[0].message.content;
+        return data.response.trim();
     });
 }

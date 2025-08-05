@@ -22,25 +22,3 @@ class AuthRoutes {
     }
 }
 exports.default = new AuthRoutes().router;
-// const router = Router();
-// router.post('/register', register);
-// router.post('/login', login);
-// router.get('/profile', verifyToken, (req, res) => {
-//   res.json({ message: "Welcome", user: (req as any).user });
-// });
-// router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-// router.get('/google/callback',
-//   passport.authenticate('google', {
-//     failureRedirect: '/login',
-//     session: false
-//   }),
-//   (req, res) => {
-//     const user = (req as any).user;
-//     const jwt = require('jsonwebtoken');
-//     const token = jwt.sign({ id: user._id, email: user.email,username:user.username }, process.env.JWT_SECRET!, {
-//       expiresIn: '1d'
-//     });
-//     res.redirect(`http://localhost:4200/login/success?token=${token}`);
-//   }
-// );
-// export default router;

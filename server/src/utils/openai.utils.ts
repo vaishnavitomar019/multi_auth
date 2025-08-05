@@ -1,47 +1,37 @@
 import fetch from 'node-fetch';
+export class PdfSummarizer {
+  private endpoint: string;
+  private model: string;
 
-interface OpenAIResponse {
-  choices: {
-    message: {
-      content: string;
-    };
-  }[];
-  error?: {
-    message: string;
-  };
-}
+  constructor() {
+    this.endpoint = process.env.OLLAMAENDPOINT || '';
+    this.model = process.env.OLLAMAMODEL || 'mistral';
 
-export async function getPdfSummary(pdfText: string): Promise<string> {
-  const openaiEndpoint = 'https://api.openai.com/v1/chat/completions';
-
-  const response = await fetch(openaiEndpoint, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: 'gpt-3.5-turbo', 
-      messages: [
-        {
-          role: 'system',
-          content: 'You are a helpful assistant that summarizes PDF documents.',
-        },
-        {
-          role: 'user',
-          content: `Summarize this PDF content:\n\n${pdfText}`,
-        },
-      ],
-      max_tokens: 500,
-      temperature: 0.5,
-    }),
-  });
-
-const data = (await response.json()) as OpenAIResponse;
-
-  if (!response.ok || !data.choices || !data.choices.length) {
-    throw new Error(data.error?.message || 'OpenAI API error');
+    if (!this.endpoint) {
+      throw new Error('OLLAMAENDPOINT is not defined in the environment variables');
+    }
   }
 
-  return data.choices[0].message.content;
+  public async summarize(pdfText: string): Promise<string> {
+    const response = await fetch(this.endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: this.model,
+        prompt: `Summarize the following PDF content:\n\n${pdfText}`,
+        stream: false,
+      }),
+    });
+
+    const data: any = await response.json();
+
+    if (!response.ok || !data.response) {
+      throw new Error('Failed to generate summary: ' + (data.error || 'Unknown error'));
+    }
+
+    return data.response.trim();
+  }
 }
+

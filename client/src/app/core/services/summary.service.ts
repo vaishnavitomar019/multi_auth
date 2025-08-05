@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environments';
@@ -11,9 +11,15 @@ export class SummaryService {
   
   constructor(private http: HttpClient) { }
 
-  summarizePdf(file: File): Observable<any> {
+  uploadFile(file: File): Observable<any> {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.post(this.baseUrl, formData);
+
+    return this.http.post(`${this.baseUrl}/summarize-pdf`, formData);
+  }
+
+  summarizeText(text: string): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(`${this.baseUrl}/summarize-pdf`, { text }, { headers });
   }
 }
