@@ -1,61 +1,21 @@
 <div class="d-flex">
-  <nav [class.collapsed]="isCollapsed" class="sidebar bg-dark text-white p-3">
-    <div class="sidebar-header d-flex justify-content-between align-items-center">
-      <h5 class="mb-0"></h5>
-      <button class="btn btn-sm btn-light" (click)="toggleSidebar()">
-        <i class="bi" [ngClass]="isCollapsed ? 'bi-list' : 'bi-x'"></i>
-      </button>
-    </div>
+  <nav [class.collapsed]="isCollapsed" class="sidebar bg-dark text-white p-3 d-flex flex-column">
 
-    <ul class="nav flex-column mt-4">
-      <li class="nav-item">
-        <a class="nav-link text-white" routerLink="/dashboard">
-          <i class="bi bi-grid-fill me-2 text-white fs-4"></i>
-          <span *ngIf="!isCollapsed">Dashboard</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link text-white" routerLink="/summarizer">
-          <i class="bi bi-robot me-2 fs-4"></i>
-          <span *ngIf="!isCollapsed">AI Summarizer</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link text-white" routerLink="/translation">
-          <i class="bi bi-translate me-2 fs-4"></i>
-          <span *ngIf="!isCollapsed">Text Translation</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link text-white" routerLink="/correction">
-          <i class="bi bi-pencil-square me-2 fs-4"></i>
-          <span *ngIf="!isCollapsed">Grammar Correction</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link text-white" routerLink="/code-explanation">
-          <i class="bi bi-code-slash me-2 fs-4"></i>
-          <span *ngIf="!isCollapsed">Code Explanation</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link text-white" routerLink="/resume-matcher">
-          <i class="bi bi-file-earmark-person me-2 fs-4"></i>
-          <span *ngIf="!isCollapsed">Resume/JD Matcher</span>
-        </a>
-      </li>
-
-      <li class="nav-item mt-auto">
-        <a class="nav-link text-white" routerLink="/user">
-          <i class="bi bi-person-circle me-2 fs-4"></i>
-          <span *ngIf="!isCollapsed">User</span>
+    <!-- Sidebar Links -->
+    <ul class="nav flex-column flex-grow-1">
+      <li class="nav-item" *ngFor="let item of menuItems">
+        <a class="nav-link text-white d-flex align-items-center justify-content-start" [routerLink]="item.route">
+          <i class="{{ item.icon }} me-2 fs-4"></i>
+          <span *ngIf="!isCollapsed">{{ item.label }}</span>
         </a>
       </li>
     </ul>
+  <!-- Toggle and Header -->
+    <div class="sidebar-header d-flex justify-content-between align-items-center mb-5">
+      <h5 class="mb-0" *ngIf="!isCollapsed"></h5>
+      <button class="btn btn-sm btn-light" (click)="toggleSidebar()">
+        <i class="bi" [ngClass]="isCollapsed ? 'bi-chevron-right' : 'bi-chevron-left'"></i>
+      </button>
+    </div>
   </nav>
 </div>

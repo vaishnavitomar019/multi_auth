@@ -1,13 +1,29 @@
-<div *ngIf="authService.isLoggedIn(); else showLogin" class="d-flex flex-column min-vh-100">
-  <!-- Navbar -->
+<!-- <div *ngIf="authService.isLoggedIn(); else showLogin" class="d-flex flex-column min-vh-100">
   <app-navbar></app-navbar>
 
   <div class="d-flex flex-grow-1">
-    <!-- Sidebar -->
     <app-sidebar></app-sidebar>
 
-    <!-- Main Content Area -->
     <div class="content p-4 w-100">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+<ng-template #showLogin>
+  <router-outlet></router-outlet>
+</ng-template> -->
+
+<div *ngIf="authService.isLoggedIn(); else showLogin" class="d-flex min-vh-100">
+  <!-- Sidebar (fixed width, full height) -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Main Area: Navbar + Content -->
+  <div class="d-flex flex-column flex-grow-1 overflow-hidden">
+    <app-navbar></app-navbar>
+
+    <!-- Scrollable Content -->
+    <div class="content-area flex-grow-1 overflow-auto p-4">
       <router-outlet></router-outlet>
     </div>
   </div>
