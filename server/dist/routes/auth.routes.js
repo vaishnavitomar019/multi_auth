@@ -16,7 +16,7 @@ class AuthRoutes {
     initializeRoutes() {
         this.router.post('/register', auth_controller_1.default.register);
         this.router.post('/login', auth_controller_1.default.login);
-        this.router.get('/profile', auth_middleware_1.verifyToken, auth_controller_1.default.getProfile);
+        this.router.get('/profile', auth_middleware_1.AuthMiddleware.verifyToken, auth_controller_1.default.getProfile);
         this.router.get('/google', passport_1.default.authenticate('google', { scope: ['profile', 'email'] }));
         this.router.get('/google/callback', passport_1.default.authenticate('google', { failureRedirect: '/login', session: false }), auth_controller_1.default.googleCallback);
     }

@@ -16,7 +16,16 @@ const express_1 = __importDefault(require("express"));
 const multer_1 = __importDefault(require("multer"));
 const pdf_parse_1 = __importDefault(require("pdf-parse"));
 const openai_utils_1 = require("../utils/openai.utils");
+class PdfRoutes {
+    constructor() {
+        this.router = express_1.default.Router();
+    }
+    pdfRoutes() {
+        this.router.post('/summarized-pdf');
+    }
+}
 const router = express_1.default.Router();
+const summarizer = new openai_utils_1.PdfSummarizer();
 const upload = (0, multer_1.default)({ storage: multer_1.default.memoryStorage() });
 router.post('/summarize-pdf', upload.single('file'), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -25,7 +34,7 @@ router.post('/summarize-pdf', upload.single('file'), (req, res) => __awaiter(voi
         const data = yield (0, pdf_parse_1.default)(req.file.buffer);
         const maxSafeChars = 24000;
         const trimmedText = data.text.slice(0, maxSafeChars);
-        const summary = yield (0, openai_utils_1.getPdfSummary)(trimmedText);
+        const summary = yield summarizer.summarize(trimmedText);
         res.json({ summary });
     }
     catch (error) {
