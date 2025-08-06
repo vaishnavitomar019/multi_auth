@@ -17,7 +17,7 @@ jobs:
       run: echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
 
     - name: Build frontend image
-      run: docker build -t ghcr.io/${{ github.repository_owner }}/client:latest ./frontend
+      run: docker build -t ghcr.io/${{ github.repository_owner }}/client:latest ./client
 
     - name: Build backend image
       run: docker build -t ghcr.io/${{ github.repository_owner }}/backend:latest ./backend
