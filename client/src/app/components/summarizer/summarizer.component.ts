@@ -15,7 +15,9 @@ export class SummarizerComponent {
   summaryText: string = '';
   loading: boolean = false;
 
-  constructor(private summaryService: SummaryService) { }
+  constructor(private summaryService: SummaryService) { 
+    console.log("component load");
+  }
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
@@ -42,11 +44,13 @@ export class SummarizerComponent {
   }
 
   summarizeText() {
+    
     if (!this.inputText.trim()) return;
 
     this.loading = true;
     this.summaryService.summarizeText(this.inputText).subscribe({
       next: (res) => {
+        console.log("res",res);
         this.summaryText = res.summary;
         this.loading = false;
       },

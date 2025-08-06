@@ -29,11 +29,11 @@ export class PdfSummarizer {
     });
 
     const data: any = await response.json();
-
+    console.log(data);
     if (!response.ok || !data.response) {
       throw new Error('Failed to generate summary: ' + (data.error || 'Unknown error'));
     }
-
+    console.log("Return Data",data.response.trim());
     return data.response.trim();
   }
 }

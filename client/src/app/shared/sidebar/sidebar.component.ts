@@ -14,6 +14,7 @@ export class SidebarComponent {
   isCollapsed = false;
 
   constructor(private authService:AuthService, private router: Router) {};
+
   menuItems = [
   { label: 'Dashboard', icon: 'bi bi-grid-fill', route: '/dashboard' },
   { label: 'AI Summarizer', icon: 'bi bi-robot', route: '/summarizer' },
@@ -24,10 +25,8 @@ export class SidebarComponent {
   { label: 'User', icon: 'bi bi-person-circle', route: '/user' },
 ];
 
-
   toggleSidebar(): void {
     this.isCollapsed = !this.isCollapsed;
   }
-
 
 }
