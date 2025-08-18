@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-  isCollapsed = false;
+  isCollapsed = true;
 
   constructor(private authService:AuthService, private router: Router) {};
 

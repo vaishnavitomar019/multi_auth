@@ -14,6 +14,7 @@
 }
 .content-area {
   background: #f9f9f9;
-  min-height: 0; /* fix flex-child overflow */
+  min-height: 0; 
   max-height: 100vh;
+  margin-top: 50px;
 }

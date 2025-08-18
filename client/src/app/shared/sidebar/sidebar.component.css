@@ -4,6 +4,7 @@
   transition: width 0.3s ease;
   font-size: 18px;
   background: linear-gradient(135deg, #0d1742, #099bc7);
+  margin-top: 50px;
 }
 
 .sidebar.collapsed {
