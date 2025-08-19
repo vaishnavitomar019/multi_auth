@@ -44,7 +44,6 @@ export class SummarizerComponent {
   }
 
   summarizeText() {
-    
     if (!this.inputText.trim()) return;
 
     this.loading = true;

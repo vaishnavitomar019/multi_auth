@@ -23,23 +23,23 @@
 
   <!-- Summary Output -->
   <div *ngIf="summaryText" class="mt-4">
-    <h5>🔍 Summary:</h5>
+    <h5> Summary:</h5>
     <div class="summary-box p-3 bg-light border rounded">
       {{ summaryText }}
     </div>
   </div>
 
-<!-- Loader Modal -->
-<div class="modal fade show d-block" tabindex="-1" *ngIf="loading"
-     style="background: rgba(0, 0, 0, 0.5); position: fixed; inset: 0; z-index: 1050;">
-  <div class="d-flex justify-content-center align-items-center h-100 w-100 ">
-    <div class="text-center ">
-      <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
-        <span class="visually-hidden">Loading...</span>
+  <!-- Loader Modal -->
+  <div class="modal fade show d-block" tabindex="-1" *ngIf="loading" tra
+    style="background: rgba(0, 0, 0, 0.5); position: fixed; inset: 0; z-index: 1050;">
+    <div class="d-flex justify-content-center align-items-center h-100 w-100 ">
+      <div class="text-center ">
+        <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <h5 class="text-white">Analyzing ...</h5>
       </div>
-      <h5 class="text-white" >Analyzing ...</h5>
     </div>
   </div>
-</div>
 
 </div>
