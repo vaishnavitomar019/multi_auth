@@ -7,6 +7,6 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 const pdfController = new PdfController();
 
-router.post('/summarize-pdf', upload.single('file'), pdfController.summarizePdf);
+router.post('/summarize-pdf', upload.single('file'), pdfController.summarizePdf );
 
 export default router;

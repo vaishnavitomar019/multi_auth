@@ -18,7 +18,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 class PdfSummarizer {
     constructor() {
-        this.endpoint = 'https://api.groq.com/openai/v1/chat/completions';
+        this.endpoint = process.env.GROQ_API_ENDPOINT || 'https://api.groq.com/openai/v1/chat/completions';
         this.model = process.env.GROQ_MODEL || 'llama3-8b-8192';
         if (!process.env.GROQ_API_KEY) {
             throw new Error('GROQ_API_KEY is not defined in the environment variables');
