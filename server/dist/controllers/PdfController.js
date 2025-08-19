@@ -35,5 +35,29 @@ class PdfController {
             }
         });
     }
+    summarizePdfStream(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("summarized pdf stream function");
+            try {
+                if (!req.file) {
+                    return res.status(400).json({ error: 'No file uploaded' });
+                }
+                const data = yield (0, pdf_parse_1.default)(req.file.buffer);
+                const pdfText = data.text;
+                // Set headers for streaming
+                res.setHeader('Content-Type', 'text/event-stream');
+                res.setHeader('Cache-Control', 'no-cache');
+                res.setHeader('Connection', 'keep-alive');
+                console.log("pdf text", pdfText);
+                console.log("calling");
+                console.log("calling summarizeStream", this.summarizer);
+                yield this.summarizer.summarizeStream(pdfText, res);
+                console.log("after summarizeStream");
+            }
+            catch (error) {
+                res.status(500).json({ error: error.message });
+            }
+        });
+    }
 }
 exports.PdfController = PdfController;

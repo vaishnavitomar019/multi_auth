@@ -9,5 +9,5 @@ const PdfController_1 = require("../controllers/PdfController");
 const router = express_1.default.Router();
 const upload = (0, multer_1.default)({ storage: multer_1.default.memoryStorage() });
 const pdfController = new PdfController_1.PdfController();
-router.post('/summarize-pdf', upload.single('file'), pdfController.summarizePdf);
+router.post('/summarize-pdf', upload.single('file'), pdfController.summarizePdfStream.bind(pdfController));
 exports.default = router;
