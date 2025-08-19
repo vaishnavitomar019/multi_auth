@@ -60,7 +60,6 @@ class PdfSummarizer {
     summarizeStream(pdfText, res) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, e_1, _b, _c;
-            var _d, _e, _f;
             console.log("utility called");
             const response = yield (0, node_fetch_1.default)(this.endpoint, {
                 method: 'POST',
@@ -81,44 +80,26 @@ class PdfSummarizer {
                 throw new Error("Failed to connect to streaming API");
             }
             const decoder = new TextDecoder();
-            let buffer = '';
+            console.log("decoder ready");
             try {
-                for (var _g = true, _h = __asyncValues(response.body), _j; _j = yield _h.next(), _a = _j.done, !_a; _g = true) {
-                    _c = _j.value;
-                    _g = false;
+                for (var _d = true, _e = __asyncValues(response.body), _f; _f = yield _e.next(), _a = _f.done, !_a; _d = true) {
+                    _c = _f.value;
+                    _d = false;
                     const chunk = _c;
-                    buffer += decoder.decode(chunk, { stream: true });
-                    const lines = buffer.split('\n');
-                    buffer = lines.pop(); // keep last line (may be incomplete)
-                    for (const line of lines) {
-                        if (!line.startsWith('data: '))
-                            continue;
-                        const dataStr = line.replace('data: ', '').trim();
-                        if (dataStr === '[DONE]')
-                            continue;
-                        try {
-                            const parsed = JSON.parse(dataStr);
-                            const content = (_f = (_e = (_d = parsed.choices) === null || _d === void 0 ? void 0 : _d[0]) === null || _e === void 0 ? void 0 : _e.delta) === null || _f === void 0 ? void 0 : _f.content;
-                            if (content) {
-                                res.write(content); // send only the text
-                                console.log("Content", content);
-                            }
-                        }
-                        catch (err) {
-                            // ignore incomplete JSON, wait for next chunk
-                        }
-                    }
+                    const text = decoder.decode(chunk, { stream: true });
+                    console.log("New Chunk received");
+                    res.write(`data: ${text}\n`);
                 }
             }
             catch (e_1_1) { e_1 = { error: e_1_1 }; }
             finally {
                 try {
-                    if (!_g && !_a && (_b = _h.return)) yield _b.call(_h);
+                    if (!_d && !_a && (_b = _e.return)) yield _b.call(_e);
                 }
                 finally { if (e_1) throw e_1.error; }
             }
-            res.end();
             console.log("Stream finished");
+            res.end();
         });
     }
 }

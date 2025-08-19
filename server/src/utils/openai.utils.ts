@@ -42,59 +42,42 @@ export class PdfSummarizer {
     return summary;
   }
 
-  public async summarizeStream(pdfText: string, res: Response): Promise<void> {
-    console.log("utility called");
 
-    const response = await fetch(this.endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: this.model,
-        stream: true,
-        messages: [
-          { role: 'system', content: 'You are a helpful assistant that summarizes PDF content.' },
-          { role: 'user', content: `Summarize the following PDF content:\n\n${pdfText}` }
-        ],
-      }),
-    });
 
-    if (!response.ok || !response.body) {
-      throw new Error("Failed to connect to streaming API");
-    }
+public async summarizeStream(pdfText: string, res: Response): Promise<void> {
+  console.log("utility called");
 
-    const decoder = new TextDecoder();
-    let buffer = '';
+  const response = await fetch(this.endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: this.model,
+      stream: true,
+      messages: [
+        { role: 'system', content: 'You are a helpful assistant that summarizes PDF content.' },
+        { role: 'user', content: `Summarize the following PDF content:\n\n${pdfText}` }
+      ],
+    }),
+  });
 
-    for await (const chunk of response.body as any) {
-      buffer += decoder.decode(chunk, { stream: true });
-
-      const lines = buffer.split('\n');
-      buffer = lines.pop()!; // keep last line (may be incomplete)
-
-      for (const line of lines) {
-        if (!line.startsWith('data: ')) continue;
-        const dataStr = line.replace('data: ', '').trim();
-        if (dataStr === '[DONE]') continue;
-
-        try {
-          const parsed = JSON.parse(dataStr);
-          const content = parsed.choices?.[0]?.delta?.content;
-          if (content) {
-            res.write(content); // send only the text
-            console.log("Content", content)
-          }
-        } catch (err) {
-
-        }
-      }
-    }
-
-    res.end();
-    console.log("Stream finished");
+  if (!response.ok || !response.body) {
+    throw new Error("Failed to connect to streaming API");
   }
 
+  const decoder = new TextDecoder();
+  console.log("decoder ready");
+
+  for await (const chunk of response.body as any) {
+    const text = decoder.decode(chunk, { stream: true });
+    console.log("New Chunk received",);
+    res.write(`data: ${text}\n`);
+  }
+
+  console.log("Stream finished");
+  res.end();
+}
 
 }
