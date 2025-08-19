@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
 import { SummaryService } from '../../core/services/summary.service';
+import { StreamsummaryService } from '../../core/services/streamsummary.service';
 
 @Component({
   selector: 'app-summarizer',
@@ -14,49 +15,31 @@ export class SummarizerComponent {
   inputText: string = '';
   summaryText: string = '';
   loading: boolean = false;
-
-  constructor(private summaryService: SummaryService) { 
-    console.log("component load");
+  selectedFile: File | null = null;
+  constructor(private summaryService: SummaryService,private streamService:StreamsummaryService) {
   }
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
-    if (file && file.type === 'application/pdf') {
-      this.loading = true;
-      this.summaryService.uploadFile(file).subscribe({
-        next: (res) => {
-          this.summaryText = res.summary;
-          this.loading = false;
-        },
-        error: (err) => {
-          console.error('Upload error', err);
-          this.loading = false;
-        }
-      });
-    } else {
-   
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.inputText = e.target.result;
-      };
-      reader.readAsText(file);
-    }
+    if (file) this.selectedFile = file;
   }
+  
+  async onSubmit(event: Event) {
+    event.preventDefault();
+    if (!this.selectedFile) return;
 
-  summarizeText() {
-    if (!this.inputText.trim()) return;
-
+    this.summaryText = '';
     this.loading = true;
-    this.summaryService.summarizeText(this.inputText).subscribe({
-      next: (res) => {
-        console.log("res",res);
-        this.summaryText = res.summary;
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error('Summary error', err);
-        this.loading = false;
-      }
-    });
+
+    try {
+      await this.streamService.streamFile(this.selectedFile, (chunk: string) => {
+        this.summaryText += chunk; // append text progressively
+      });
+    } catch (err) {
+      console.error(err);
+    }
+
+    this.loading = false;
   }
+
 }

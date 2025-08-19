@@ -8,13 +8,12 @@ import { environment } from '../../environments/environments';
 })
 export class SummaryService {
   public baseUrl = environment.apiUrl;
-  
+
   constructor(private http: HttpClient) { }
 
   uploadFile(file: File): Observable<any> {
     const formData = new FormData();
     formData.append('file', file);
-
     return this.http.post(`${this.baseUrl}/summarize-pdf`, formData);
   }
 
@@ -22,4 +21,6 @@ export class SummaryService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(`${this.baseUrl}/summarize-pdf`, { text }, { headers });
   }
+
+  
 }
