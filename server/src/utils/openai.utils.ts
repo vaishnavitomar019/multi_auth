@@ -8,12 +8,12 @@ export class PdfSummarizer {
   private model: string;
 
   constructor() {
-    this.endpoint = process.env.GROQ_API_ENDPOINT || 'https://api.groq.com/openai/v1/chat/completions';
-    this.model = process.env.GROQ_MODEL || 'llama3-8b-8192';
+    this.endpoint = process.env.OLLAMAENDPOINT || 'https://api.groq.com/openai/v1/chat/completions';
+    this.model = process.env.OLLAMA_MODEL || 'llama3-8b-8192';
 
-    if (!process.env.GROQ_API_KEY) {
-      throw new Error('GROQ_API_KEY is not defined in the environment variables');
-    }
+    // if (!process.env.GROQ_API_KEY) {
+    //   throw new Error('GROQ_API_KEY is not defined in the environment variables');
+    // }
   }
 
   public async summarize(pdfText: string): Promise<string> {
@@ -42,42 +42,36 @@ export class PdfSummarizer {
     return summary;
   }
 
+  public async summarizeStream(pdfText: string, res: Response): Promise<void> {
+    console.log("utility called");
 
+    const response = await fetch(this.endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: this.model,
+        stream: true,
+        prompt: `Summarize the following PDF content:\n\n${pdfText}`,
+      }),
+    });
 
-public async summarizeStream(pdfText: string, res: Response): Promise<void> {
-  console.log("utility called");
+    if (!response.ok || !response.body) {
+      throw new Error("Failed to connect to streaming API");
+    }
 
-  const response = await fetch(this.endpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: this.model,
-      stream: true,
-      messages: [
-        { role: 'system', content: 'You are a helpful assistant that summarizes PDF content.' },
-        { role: 'user', content: `Summarize the following PDF content:\n\n${pdfText}` }
-      ],
-    }),
-  });
+    const decoder = new TextDecoder();
+    console.log("decoder ready");
 
-  if (!response.ok || !response.body) {
-    throw new Error("Failed to connect to streaming API");
+    for await (const chunk of response.body as any) {
+      const text = decoder.decode(chunk, { stream: true });
+      console.log("New Chunk received",);
+      res.write(`data: ${text}\n`);
+    }
+
+    console.log("Stream finished");
+    res.end();
   }
-
-  const decoder = new TextDecoder();
-  console.log("decoder ready");
-
-  for await (const chunk of response.body as any) {
-    const text = decoder.decode(chunk, { stream: true });
-    console.log("New Chunk received",);
-    res.write(`data: ${text}\n`);
-  }
-
-  console.log("Stream finished");
-  res.end();
-}
 
 }

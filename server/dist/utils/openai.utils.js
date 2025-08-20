@@ -25,11 +25,11 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 class PdfSummarizer {
     constructor() {
-        this.endpoint = process.env.GROQ_API_ENDPOINT || 'https://api.groq.com/openai/v1/chat/completions';
-        this.model = process.env.GROQ_MODEL || 'llama3-8b-8192';
-        if (!process.env.GROQ_API_KEY) {
-            throw new Error('GROQ_API_KEY is not defined in the environment variables');
-        }
+        this.endpoint = process.env.OLLAMAENDPOINT || 'https://api.groq.com/openai/v1/chat/completions';
+        this.model = process.env.OLLAMA_MODEL || 'llama3-8b-8192';
+        // if (!process.env.GROQ_API_KEY) {
+        //   throw new Error('GROQ_API_KEY is not defined in the environment variables');
+        // }
     }
     summarize(pdfText) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -64,16 +64,12 @@ class PdfSummarizer {
             const response = yield (0, node_fetch_1.default)(this.endpoint, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     model: this.model,
                     stream: true,
-                    messages: [
-                        { role: 'system', content: 'You are a helpful assistant that summarizes PDF content.' },
-                        { role: 'user', content: `Summarize the following PDF content:\n\n${pdfText}` }
-                    ],
+                    prompt: `Summarize the following PDF content:\n\n${pdfText}`,
                 }),
             });
             if (!response.ok || !response.body) {
