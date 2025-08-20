@@ -4,7 +4,7 @@
   <form (submit)="onSubmit($event)">
     <div class="mb-3">
       <label class="form-label">Upload PDF or Text File</label>
-      <input type="file" (change)="onFileSelected($event)" class="form-control" accept=".pdf,.txt" required />
+      <input type="file" (change)="onFileSelected($event)" class="form-control" accept=".pdf" required />
     </div>
     <div class="text-center">
       <button type="submit" class="btn btn-primary px-4" [disabled]="loading || !selectedFile">
@@ -15,8 +15,10 @@
 
   <div *ngIf="summaryText" class="mt-4">
     <h5> Summary:</h5>
+    <!-- <div class="summary-box p-3 bg-light border rounded" [innerHtml]="htmlContent">
+    </div> -->
     <div class="summary-box p-3 bg-light border rounded">
-      {{ summaryText }}
+      <markdown [data]="summaryText"></markdown>
     </div>
   </div>
 

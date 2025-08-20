@@ -9,10 +9,7 @@ export class StreamsummaryService {
   public baseUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
-  async streamFile(
-    file: File,
-    onChunk: (chunk: string) => void
-  ): Promise<void> {
+  async streamFile(file: File, onChunk: (chunk: string) => void): Promise<void> {
     const formData = new FormData();
     formData.append('file', file);
 
@@ -22,7 +19,6 @@ export class StreamsummaryService {
     });
 
     if (!response.body) throw new Error('No response body');
-
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
 
@@ -30,34 +26,31 @@ export class StreamsummaryService {
       const { done, value } = await reader.read();
       if (done) break;
 
-      const text = decoder.decode(value, { stream: true });
+      const text = decoder.decode(value, { stream: true });  //Converts the raw chunk into a string.
       const lines = text.split('\n').filter(line => line.trim() !== '');
 
-      for (const line of lines) {
-        if (!line.startsWith('data: ')) continue;
-
-        const dataStr = line.replace('data: ', '').trim();
-        if (dataStr === '[DONE]') continue;
-
+      for (let line of lines) {
+        if (line.startsWith("data:")) {
+          line = line.replace("data:", "").trim();
+        }
         try {
-          const parsed = JSON.parse(dataStr);
-          const delta = parsed.choices?.[0]?.delta?.content;
-          const finish = parsed.choices?.[0]?.finish_reason;
+          const parsed = JSON.parse(line);//Turns the line into a JavaScript object.
 
-          if (delta) {
-            onChunk(delta); // send actual text to component
+          // only take the text
+          if (parsed.response) {
+            onChunk(parsed.response);
           }
 
-          if (finish === 'stop') {
-            // Stop reading further
-            return;
+          if (parsed.done === true) {
+            return; // stop when finished
           }
-
         } catch (err) {
-          console.error('JSON parse error:', err);
+          console.error("Parse error:", err, line);
         }
       }
     }
+
   }
+
 
 }
