@@ -18,6 +18,7 @@
     <!-- <div class="summary-box p-3 bg-light border rounded" [innerHtml]="htmlContent">
     </div> -->
     <div class="summary-box p-3 bg-light border rounded">
+      <button class="float-end " (click)="copySummary()">Copy</button>
       <markdown [data]="summaryText"></markdown>
     </div>
   </div>
@@ -35,3 +36,4 @@
     </div>
   </div>
 </div>
+<app-toast></app-toast>
