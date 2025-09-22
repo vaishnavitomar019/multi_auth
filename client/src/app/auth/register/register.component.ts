@@ -2,13 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 // import { FormioModule } from '@formio/angular';
 import { AuthService } from '../../core/services/auth.service';
-import { HttpClientModule } from '@angular/common/http';
+import {} from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule,HttpClientModule],
+  imports: [CommonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -81,7 +81,7 @@ export class RegisterComponent {
     ]
   }
   
-  constructor(private authService: AuthService , private router:Router) { }
+  constructor(private authService: AuthService ,private router:Router) { }
 
   onSubmit(submission: any) {
     const formData = submission.data;
