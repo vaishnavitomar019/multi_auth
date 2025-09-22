@@ -53,7 +53,16 @@ export class PdfSummarizer {
       body: JSON.stringify({
         model: this.model,
         stream: true,
-        prompt: `Summarize the following PDF content:\n\n${pdfText}`,
+        prompt: `Summarize the content of the following PDF.
+
+Instructions:
+1. Provide a clear, concise summary in plain text.
+2. Extract any code examples and include them in proper Markdown code blocks using the appropriate language.
+3. Number the key points if applicable.
+4. Keep the summary easy to read and understandable for a developer audience.
+
+PDF Content:
+${pdfText}`
       }),
     });
 

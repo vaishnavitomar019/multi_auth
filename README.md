@@ -94,14 +94,177 @@ If you have run out of energy or time for your project, put a note at the top of
 
 backend/
 ├── models/
-│   └── User.js         ✅ (your current user schema)
+│   └── User.js          (your current user schema)
 ├── routes/
-│   └── auth.js         🔐 Auth routes (register, login, Google)
+│   └── auth.js          Auth routes (register, login, Google)
 ├── controllers/
-│   └── authController.js 🔁 Logic for register/login
+│   └── authController.js  Logic for register/login
 ├── utils/
-│   └── jwt.js          🔑 Token generation/verify
+│   └── jwt.js          Token generation/verify
 ├── config/
-│   └── db.js           🌐 MongoDB connection
-├── server.js           🚀 Entry point
+│   └── db.js           MongoDB connection
+├── server.js           Entry point
 
+1. **package.json** in Node.js is a JSON file storing metadata, dependencies, and scripts. An example of `package.json`:
+    ```json
+    {
+      "name": "my-app",
+      "version": "1.0.0",
+      "scripts": {
+        "start": "node index.js"
+      },
+      "dependencies": {
+        "express": "^4.18.2"
+      }
+    }
+    ```
+
+  2. The `require` function is used to import modules in Node.js:
+    ```js
+    const fs = require('fs');
+    fs.readFileSync('file.txt', 'utf8');
+    ```
+
+  3. **The use of the `require` function in Node.js:**
+     - Importing modules in Node.js.
+     - Example:
+       ```js
+       const fs = require('fs'); // Import File System module
+       fs.readFileSync('file.txt', 'utf8');
+       ```
+
+  4. **Callback function** in Node.js: A function passed as an argument to another function, executed after an operation is completed. Common in asynchronous operations. Example:
+    ```js
+    const fs = require('fs');
+    fs.readFile('file.txt', 'utf8', function(err, data) {
+      if (err) throw err;
+      console.log(data);
+    });
+    ```
+
+  5. **Modules** in Node.js: Reusable blocks of code. Types:
+     - Built-in modules: fs, http, path
+     - Local modules: custom files you create
+     - Third-party modules: installed via npm
+     - Example:
+       ```js
+       // local module
+       const math = require('./math.js');
+       console.log(math.add(2, 3));
+       ```
+
+  6. **Global objects** in Node.js: Objects accessible anywhere without requiring them. Examples:
+     - `__dirname`: current directory
+     - `__filename`: current file
+     - `global`: global namespace object
+     - `process`: information about the running process
+
+  7. **Asynchronous operations** in Node.js are handled by using an event loop to handle I/O without blocking the main thread. Example: reading a file asynchronously:
+    ```js
+    const fs = require('fs');
+    console.log("Start reading file");
+    fs.readFile('file.txt', 'utf8', (err, data) => {
+      if (err) throw err;
+      console.log("File content:", data);
+    });
+    console.log("End of script");
+    ```
+
+  8. The **Event Loop** in Node.js is used to handle asynchronous operations:
+     - Node.js is single-threaded, so it uses the event loop to handle asynchronous operations.
+     - Steps: execute synchronous code, check timers and I/O callbacks, execute callbacks in the event queue.
+     - Example:
+       ```js
+       console.log("Start");
+       setTimeout(() => {
+         console.log("Timeout finished");
+       }, 0);
+       console.log("End");
+       ```
+
+  9. **Middleware** in Node.js: Functions that execute during the request-response cycle in frameworks like Express. Purpose: modify `req`, `res`, or perform tasks like logging, authentication. Example:
+    ```js
+    const express = require('express');
+    const app = express();
+    // Middleware
+    app.use((req, res, next) => {
+      console.log('Request URL:', req.url);
+      next(); // pass control to next middleware
+    });
+    app.get('/', (req, res) => res.send('Hello World'));
+    app.listen(3000);
+    ```
+
+  10. **Streams** in Node.js: Streams handle reading/writing large data efficiently without loading everything into memory. Types: Readable, Writable, Duplex, Transform. Example:
+     ```js
+     const fs = require('fs');
+     const readStream = fs.createReadStream('input.txt');
+     const writeStream = fs.createWriteStream('output.txt');
+     readStream.pipe(writeStream); // Streams data efficiently
+     ```
+
+  11. The **Buffer** class in Node.js is used to handle binary data (files, network packets). Example:
+    ```js
+    const buf = Buffer.from('Hello Node.js');
+    console.log(buf); // <Buffer 48 65 6c 6c 6f ...>
+    console.log(buf.toString()); // "Hello Node.js"
+    ```
+
+  12. **Exceptions** in Node.js are handled using try-catch for synchronous code and error-first callbacks or `.catch()` for asynchronous code:
+    ```js
+    fs.readFile('file.txt', 'utf8', (err, data) => {
+      if(err) {
+        console.error('Error reading file:', err);
+        return;
+      }
+      console.log(data);
+    });
+    ```
+
+  13. **Difference between `process.nextTick()` and `setImmediate()`:** Function Execution Timing
+     - `process.nextTick()`: executes before the next event loop iteration (high priority)
+     - `setImmediate()`: executes on the next event loop iteration after I/O events
+    ```js
+    process.nextTick(() => console.log("Next tick"));
+    setImmediate(() => console.log("Set Immediate"));
+    console.log("Main code");
+    ```
+
+    1. The summary discusses the `package.json` file in Node.js, which stores metadata, dependencies, and scripts. Here's a simple example of what it might look like:
+
+```json
+{
+  "name": "my-app",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
+```
+
+  2. The `require` function is used in Node.
+
+1. `package.json` in Node.js is a JSON file storing metadata, dependencies, and scripts. Here's an example:
+    ```json
+    {
+      "name": "my-app",
+      "version": "1.0.0",
+      "scripts": {
+        "start": "node index.js"
+      },
+      "dependencies": {
+        "express": "^4.18.2"
+      }
+    }
+    ```
+
+  2. The `require` function is used to import modules in Node.js. Here's an example:
+    ```js
+    const fs = require('fs');
+    fs.readFileSync('file.txt', 'utf8');
+    ```
+
+ 

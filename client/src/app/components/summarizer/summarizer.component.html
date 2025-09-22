@@ -1,6 +1,5 @@
-<div class="card shadow-lg p-3">
+<div class="card shadow-lg p-5 mb-2">
   <h2 class="mb-4 text-center text-dark"> <i class="bi bi-robot me-2"></i>Smart AI Summarizer</h2>
-
   <form (submit)="onSubmit($event)">
     <div class="mb-3">
       <label class="form-label">Upload PDF or Text File</label>
@@ -13,13 +12,14 @@
     </div>
   </form>
 
-  <div *ngIf="summaryText" class="mt-4">
+  <div *ngIf="summaryText" class="mt-4 mb-2">
     <h5> Summary:</h5>
-    <!-- <div class="summary-box p-3 bg-light border rounded" [innerHtml]="htmlContent">
-    </div> -->
-    <div class="summary-box p-3 bg-light border rounded">
-      <button class="float-end " (click)="copySummary()">Copy</button>
+    <div class="p-5 mb-4 bg-light border rounded" #pdfContent>
       <markdown [data]="summaryText"></markdown>
+      <button class="btn btn-primary btn-sm float-end d-flex align-items-center" (click)="copySummary()"
+        title="Copy summary to clipboard">
+        <i class="bi bi-clipboard me-2"></i> Copy
+      </button>
     </div>
   </div>
 

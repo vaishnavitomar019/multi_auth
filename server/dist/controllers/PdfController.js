@@ -49,7 +49,6 @@ class PdfController {
                 res.setHeader('Cache-Control', 'no-cache');
                 res.setHeader('Connection', 'keep-alive');
                 console.log("pdf text", pdfText);
-                console.log("calling");
                 console.log("calling summarizeStream", this.summarizer);
                 yield this.summarizer.summarizeStream(pdfText, res);
                 console.log("after summarizeStream");

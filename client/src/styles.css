@@ -1,4 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
 body {
-  overflow: hidden; 
+  overflow: hidden;
+}
+code {
+  font-size: 0.875em !important; color: var(--bs-code-color, #d63384) !important;
+  word-wrap: break-word !important;
+}
+
+pre {
+  display: block !important;
+  font-family: monospace;
+  unicode-bidi: isolate;
+  white-space: pre;
+  margin: 1em 0;
+  background-color: antiquewhite;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  overflow-x: auto;
 }

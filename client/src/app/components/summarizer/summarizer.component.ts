@@ -1,16 +1,16 @@
 import { CommonModule, NgClass } from '@angular/common';
-import { Component, NgModule } from '@angular/core';
+import { Component, ElementRef, NgModule, ViewChild } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
 import { SummaryService } from '../../core/services/summary.service';
 import { StreamsummaryService } from '../../core/services/streamsummary.service';
 import { MarkdownModule } from 'ngx-markdown';
 import { ToastService } from '../../core/services/toast.service';
 import { ToastComponent } from '../toast/toast.component';
-
+import { HighlightDirective } from '../../core/Directive/highlight.directive';
 @Component({
   selector: 'app-summarizer',
   standalone: true,
-  imports: [CommonModule, FormsModule, MarkdownModule,ToastComponent],
+  imports: [CommonModule, FormsModule, MarkdownModule, ToastComponent, HighlightDirective],
   templateUrl: './summarizer.component.html',
   styleUrl: './summarizer.component.css'
 })
@@ -33,7 +33,6 @@ export class SummarizerComponent {
   async onSubmit(event: Event) {
     event.preventDefault();
     if (!this.selectedFile) return;
-
     this.summaryText = '';
     this.htmlContent = '';
     this.loading = true;
@@ -57,4 +56,5 @@ export class SummarizerComponent {
       })
       .catch(err => console.error('Copy failed:', err));
   }
+
 }
